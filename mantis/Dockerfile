@@ -23,6 +23,6 @@ ENV MANTIS_SHA1 45e3d2a98527fdbfd825c7f2d55ce10b9a4fe2ca
 RUN set -xe \
     && curl -SL ${MANTIS_URL} -o mantis.tar.gz \
     && echo "${MANTIS_SHA1}  mantis.tar.gz" | sha1sum -c \
-    && tar -xz -f mantis.tar.gz \
+    && tar -xz --strip-components=1 -f mantis.tar.gz \
     && rm mantis.tar.gz \
     && chown -R www-data:www-data .
