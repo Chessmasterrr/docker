@@ -14,15 +14,18 @@ RUN set -xe \
 
 ### set values ###
 # see https://www.mantisbt.org/download.php for version number
-ENV MANTIS_VERSION 2.1.0
-# see https://sourceforge.net/projects/mantisbt/files/mantis-stable/2.1.0/ (click on the i beside the file)
+ENV MANTIS_VERSION 2.2.1
+# see https://sourceforge.net/projects/mantisbt/files/mantis-stable/2.2.1/ (click on the i beside the file)
 ENV MANTIS_URL https://sourceforge.net/projects/mantisbt/files/mantis-stable/${MANTIS_VERSION}/mantisbt-${MANTIS_VERSION}.tar.gz/download
-ENV MANTIS_SHA1 45e3d2a98527fdbfd825c7f2d55ce10b9a4fe2ca
+ENV MANTIS_SHA1 7c79fcac7288c909899bd395383d0232daf3664f
 
-### install application ###
+### install application (with Custom Reporter plugin) ###
 RUN set -xe \
     && curl -SL ${MANTIS_URL} -o mantis.tar.gz \
     && echo "${MANTIS_SHA1}  mantis.tar.gz" | sha1sum -c \
     && tar -xz --strip-components=1 -f mantis.tar.gz \
     && rm mantis.tar.gz \
-    && chown -R www-data:www-data .
+    && chown -R www-data:www-data . \
+    && curl -SL https://github.com/mantisbt-plugins/CustomReporter/archive/master.zip -o customreporter.zip \
+    && mkdir plugins/customreporter \
+    && tar -xz -f customreporter.zip -C plugins
