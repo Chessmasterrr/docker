@@ -26,6 +26,6 @@ RUN set -xe \
     && tar -xz --strip-components=1 -f mantis.tar.gz \
     && rm mantis.tar.gz \
     && chown -R www-data:www-data . \
-    && curl -SL https://github.com/mantisbt-plugins/CustomReporter/archive/master.zip -o customreporter.zip \
+    && curl -SL https://github.com/mantisbt-plugins/CustomReporter/archive/master.tar.gz -o customreporter.tar.gz \
     && mkdir plugins/customreporter \
-    && tar -xz -f customreporter.zip -C plugins
+    && tar -xz --strip-components=1 -f customreporter.tar.gz -C plugins/customreporter/
