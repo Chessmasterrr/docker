@@ -25,7 +25,8 @@ RUN set -xe \
     && echo "${MANTIS_SHA1}  mantis.tar.gz" | sha1sum -c \
     && tar -xz --strip-components=1 -f mantis.tar.gz \
     && rm mantis.tar.gz \
-    && chown -R www-data:www-data . \
-    && curl -SL https://github.com/mantisbt-plugins/CustomReporter/archive/master.tar.gz -o customreporter.tar.gz \
-    && mkdir plugins/customreporter \
-    && tar -xz --strip-components=1 -f customreporter.tar.gz -C plugins/customreporter/
+    && curl -SL https://github.com/fmancardi/CustomReporter/archive/mantisbt.2.1.x.tar.gz -o customreporter.tar.gz \
+    && mkdir plugins/CustomReporter \
+    && tar -xz --strip-components=1 -f customreporter.tar.gz -C plugins/CustomReporter/ \
+    && rm customreporter.tar.gz \
+    && chown -R www-data:www-data .
