@@ -11,7 +11,7 @@ To use the docker container with mysql use the following commands:
 (optional: import old database with
 `sudo docker exec -i mysql mysql -u root --password=[PASSWORD] wiki < [PathToSqlFile]`)
 
-`sudo docker run --name wiki_main --restart=always -p 127.0.0.1:5501:80 --link wiki_mysql -v /docker/wiki/main/LocalSettings.php:/var/www/html/LocalSettings.php -v /docker/wiki/main/images:/var/www/html/images -d chessmasterrr/wiki:latest`
+`sudo docker run --name wiki --restart=always -p 80 --link mysql -v /wiki/LocalSettings.php:/var/www/html/LocalSettings.php -v /wiki/images:/var/www/html/images -d chessmasterrr/wiki:latest`
 
 To backup your database use:
 `docker exec mysql sh -c 'exec mysqldump --all-databases -uroot -p"[PASSWORD]"' > [PathToBackupSqlFile]`
