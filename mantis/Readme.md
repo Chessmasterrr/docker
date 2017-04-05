@@ -11,8 +11,8 @@ To use the docker container with mysql use the following commands:
 (optional: import old database with
 `sudo docker exec -i mysql mysql -u root --password=[PASSWORD] mantis < [PathToSqlFile]`)
 
-`sudo docker run --name mantis --restart=always -p 80 --link mysql -v /docker/mantis/main:/var/www/html/config -d chessmasterrr/mantis:latest`
-(Note: In `/docker/mantis/main` I store the configuration file for mantis.)
+`sudo docker run --name mantis --restart=always -p 80 --link mysql -v /mantis:/var/www/html/config -d chessmasterrr/mantis:latest`
+(Note: In `/mantis` I store the configuration file for mantis.)
 
 To backup your database use:
 `docker exec mysql sh -c 'exec mysqldump --all-databases -uroot -p"[PASSWORD]"' > [PathToBackupSqlFile]`
