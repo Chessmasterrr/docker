@@ -14,7 +14,7 @@ RUN set -xe \
 
 ### set values ###
 # see https://www.mediawiki.org/wiki/MediaWiki for version number
-ENV MEDIAWIKI_VERSION 1.28.0
+ENV MEDIAWIKI_VERSION 1.28.2
 # see https://www.mediawiki.org/wiki/Download
 ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.28/mediawiki-${MEDIAWIKI_VERSION}.tar.gz
 
