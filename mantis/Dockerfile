@@ -14,10 +14,10 @@ RUN set -xe \
 
 ### set values ###
 # see https://www.mantisbt.org/download.php for version number
-ENV MANTIS_VERSION 2.4.1
+ENV MANTIS_VERSION 2.5.1
 # see https://sourceforge.net/projects/mantisbt/files/mantis-stable/2.2.1/ (click on the i beside the file)
 ENV MANTIS_URL https://sourceforge.net/projects/mantisbt/files/mantis-stable/${MANTIS_VERSION}/mantisbt-${MANTIS_VERSION}.tar.gz/download
-ENV MANTIS_SHA1 2790dc4f5458bf2792fb31614d08729859b64c87
+ENV MANTIS_SHA1 d90d4a71f24cb6bdab3f11b0ed5280cc0c27ce28
 
 ### install application (with Custom Reporter plugin) ###
 RUN set -xe \
