@@ -1,7 +1,7 @@
 FROM php:7.1.2-apache
 
 ### install preconditions ###
-# nextcloud needs the following additional php extensions: bz2 curl exif gd intl ldap mcrypt mysqli opcache pcntl pdo_mysql zip
+# nextcloud needs the following additional php extensions: bz2 curl exif gd intl ldap mcrypt mysqli pcntl pdo_mysql zip
 # (see https://docs.nextcloud.com/server/12/admin_manual/installation/source_installation.html)
 # bz2 extension needs libbz2-dev
 # curl extension needs libcurl4-openssl-dev
@@ -10,7 +10,6 @@ FROM php:7.1.2-apache
 # intl extension needs libicu-dev
 # ldap extension needs libldap2-dev
 # mcrypt extension needs libmcrypt-dev
-# opcache extension needs libmemcached-dev
 # bzip2 is needed to decrompress the installation archive later on
 
 RUN set -xe \
@@ -23,7 +22,6 @@ RUN set -xe \
         libjpeg-dev \
         libldap2-dev \
         libmcrypt-dev \
-        libmemcached-dev \
         libpng-dev \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
@@ -36,7 +34,6 @@ RUN set -xe \
         ldap \
         mcrypt \
         mysqli \
-        opcache \
         pcntl \
         pdo_mysql \
         zip \
@@ -54,11 +51,11 @@ RUN { \
     } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
     && a2enmod rewrite
 
-# configure memcached
+# configure file cache
 RUN set -ex \
-    && pecl install memcached-3.0.2 \
-    && docker-php-ext-enable memcached \
-    && a2enmod rewrite
+ && pecl install redis-3.1.1 \
+ && docker-php-ext-enable redis
+RUN a2enmod rewrite
 
 ### set values ###
 # see https://nextcloud.com/install/#instructions-server for version number
