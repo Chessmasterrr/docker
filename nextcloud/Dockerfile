@@ -56,7 +56,8 @@ ENV NEXTCLOUD_URL https://download.nextcloud.com/server/releases/nextcloud-${NEX
 
 
 ### configure system ###
-# configure opcache and imagick, see https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
+# configure opcache, see https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
+# configure imagick and cron
 RUN { \
         echo 'opcache.enable=1'; \
         echo 'opcache.enable_cli=1'; \
@@ -67,10 +68,9 @@ RUN { \
         echo 'opcache.revalidate_freq=1'; \
     } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
     && a2enmod rewrite \
-    && echo 'extension=imagick.so' > /usr/local/etc/php/conf.d/imagick.ini
-
-# configure cron
-RUN echo "*/15  *  *  *  * php -f /var/www/html/cron.php"| crontab -u www-data -
+    && echo 'extension=imagick.so' > /usr/local/etc/php/conf.d/imagick.ini \
+    && echo "*/15  *  *  *  www-data php -f /var/www/html/cron.php" >> /etc/crontab \
+    && echo "#" >> /etc/crontab
 
 
 ### install application ###
