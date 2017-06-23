@@ -11,9 +11,8 @@ FROM php:7.1.2-apache
 # ldap extension needs libldap2-dev
 # mcrypt extension needs libmcrypt-dev
 # bzip2 is needed to decrompress the installation archive later on
-# cron is needed for the automatic maintenance script later on
 # libmagickwand-dev is needed for imagick
-# rewrite is needed for redis
+# cron is needed for the maintenance script
 RUN set -xe \
     && apt-get update \
     && apt-get install -y \
@@ -29,10 +28,10 @@ RUN set -xe \
         libpng-dev \
     && pecl install \
         imagick \
-        redis-3.1.1 \
+        APCu-5.1.8 \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
-    && docker-php-ext-enable redis \
+    && docker-php-ext-enable apcu \
     && docker-php-ext-install \
         bz2 \
         curl \
@@ -69,8 +68,10 @@ RUN { \
     } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
     && a2enmod rewrite \
     && echo 'extension=imagick.so' > /usr/local/etc/php/conf.d/imagick.ini \
-    && echo "*/15  *  *  *  www-data php -f /var/www/html/cron.php" >> /etc/crontab \
-    && echo "#" >> /etc/crontab
+    && echo 'extension=apcu.so' > /usr/local/etc/php/conf.d/apcu.ini \
+    && sed -i '$ d' /etc/crontab \
+    && echo '*/15  *  *  *  www-data php -f /var/www/html/cron.php' >> /etc/crontab \
+    && echo '#' >> /etc/crontab
 
 
 ### install application ###
