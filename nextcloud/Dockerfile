@@ -1,4 +1,4 @@
-FROM php:7.1.2-apache
+FROM php:7.1.6-apache
 
 ### install preconditions ###
 # nextcloud needs the following additional php extensions: bz2 curl exif gd intl ldap mcrypt mysqli opcache pcntl pdo_mysql zip
@@ -68,7 +68,6 @@ RUN { \
     } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
     && a2enmod rewrite \
     && echo 'extension=imagick.so' > /usr/local/etc/php/conf.d/imagick.ini \
-    && echo 'extension=apcu.so' > /usr/local/etc/php/conf.d/apcu.ini \
     && sed -i '$ d' /etc/crontab \
     && echo '*/15  *  *  *  www-data php -f /var/www/html/cron.php' >> /etc/crontab \
     && echo '#' >> /etc/crontab \
@@ -88,3 +87,8 @@ RUN set -xe \
     && rm nextcloud.tar.bz2.asc \
     && rm keys.txt \
 && chown -R www-data:www-data .
+
+
+### run container ###
+COPY startup.sh /usr/local/bin/
+CMD ["startup.sh"]
