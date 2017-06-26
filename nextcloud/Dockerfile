@@ -71,7 +71,8 @@ RUN { \
     && echo 'extension=apcu.so' > /usr/local/etc/php/conf.d/apcu.ini \
     && sed -i '$ d' /etc/crontab \
     && echo '*/15  *  *  *  www-data php -f /var/www/html/cron.php' >> /etc/crontab \
-    && echo '#' >> /etc/crontab
+    && echo '#' >> /etc/crontab \
+    && cron
 
 
 ### install application ###
