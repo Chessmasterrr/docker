@@ -56,7 +56,7 @@ ENV NEXTCLOUD_URL https://download.nextcloud.com/server/releases/nextcloud-${NEX
 
 ### configure system ###
 # configure opcache, see https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
-# configure imagick and cron
+# configure imagick, cron and max upload size
 RUN { \
         echo 'opcache.enable=1'; \
         echo 'opcache.enable_cli=1'; \
@@ -69,13 +69,14 @@ RUN { \
     && a2enmod rewrite \
     && echo 'extension=imagick.so' > /usr/local/etc/php/conf.d/imagick.ini \
     && sed -i '$ d' /etc/crontab \
-    && echo '*/15  *  *  *  www-data php -f /var/www/html/cron.php' >> /etc/crontab \
+    && echo '*/15 *  * * *  www-data php -f /var/www/html/cron.php' >> /etc/crontab \
     && echo '#' >> /etc/crontab \
     && cron
 
 
 ### install application ###
 # import gpg keys to verify the downloads, see https://nextcloud.com/nextcloud.asc
+# set upload size
 COPY keys.txt keys.txt
 RUN set -xe \
     && curl -SL ${NEXTCLOUD_URL} -o nextcloud.tar.bz2 \
@@ -86,7 +87,9 @@ RUN set -xe \
     && rm nextcloud.tar.bz2 \
     && rm nextcloud.tar.bz2.asc \
     && rm keys.txt \
-&& chown -R www-data:www-data .
+    && chown -R www-data:www-data . \
+    && sed -i 's/php_value upload_max_filesize 511M/php_value upload_max_filesize 2G/g' /var/www/html/.htaccess \
+    && sed -i 's/php_value post_max_size 511M/php_value post_max_size 2G/g' /var/www/html/.htaccess
 
 
 ### run container ###
