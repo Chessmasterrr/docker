@@ -14,9 +14,9 @@ RUN set -xe \
 
 ### set values ###
 # see https://www.mediawiki.org/wiki/MediaWiki for version number
-ENV MEDIAWIKI_VERSION 1.28.2
+ENV MEDIAWIKI_VERSION 1.30.0
 # see https://www.mediawiki.org/wiki/Download
-ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.28/mediawiki-${MEDIAWIKI_VERSION}.tar.gz
+ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.30/mediawiki-${MEDIAWIKI_VERSION}.tar.gz
 
 ### install application ###
 # import gpg keys to verify the downloads
