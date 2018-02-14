@@ -38,6 +38,10 @@ RUN set -xe \
 # https://github.com/docker/docker/blob/9a9fc01af8fb5d98b8eec0740716226fadb3735c/contrib/mkimage/debootstrap#L134-L151
 	&& echo 'Apt::AutoRemove::SuggestsImportant "false";' > /etc/apt/apt.conf.d/docker-autoremove-suggests \
 	\
+# install important packages
+	&& apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		wget \
  # delete all the apt list files since they're big and get stale quickly
  # this forces "apt-get update" in dependent images, which is also good
  # (see also https://bugs.launchpad.net/cloud-images/+bug/1699913)
