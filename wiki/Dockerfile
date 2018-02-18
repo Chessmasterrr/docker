@@ -1,4 +1,4 @@
-FROM test:latest
+FROM chessmasterrr/php:latest
 
 # install needed packages:
 # 	php-apcu as cache for the wiki
