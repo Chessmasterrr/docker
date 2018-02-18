@@ -1,16 +1,15 @@
-FROM php:7.1.2-apache
+FROM test:latest
 
-### install preconditions ###
-# mysqli is needed for connection to mysql database
-# gd is needed for thumbnails
-# gd needs config settings for working with png and jpeg formats via docker-php-ext-configure
-# for this config settings the following packages are needed: libpng-dev libjpeg-dev
-RUN set -xe \
-    && apt-get update \
-    && apt-get install -y libpng-dev libjpeg-dev \
-    && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-    && docker-php-ext-install gd mysqli \
-    && rm -rf /var/lib/apt/lists/*
+# install needed packages:
+# 	php-apcu as cache for the wiki
+#   php-intl for internationalization
+#	ca-certificates for the SSL root certificate for communication with the mail server
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		ca-certificates \
+		php-apcu \
+		php-intl  \
+	&& rm -rf /var/lib/apt/lists/*
 
 ### set values ###
 # see https://www.mediawiki.org/wiki/MediaWiki for version number
@@ -20,10 +19,11 @@ ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.30/mediawiki-${MEDI
 
 ### install application ###
 # import gpg keys to verify the downloads
+WORKDIR /var/www/html
 COPY keys.txt keys.txt
 RUN set -xe \
-    && curl -SL ${MEDIAWIKI_URL} -o mediawiki.tar.gz \
-    && curl -SL ${MEDIAWIKI_URL}.sig -o mediawiki.tar.gz.sig \
+    && wget --no-check-certificate --no-verbose ${MEDIAWIKI_URL} -O mediawiki.tar.gz \
+    && wget --no-check-certificate --no-verbose ${MEDIAWIKI_URL}.sig -O mediawiki.tar.gz.sig \
     && gpg --import keys.txt \
     && gpg --verify mediawiki.tar.gz.sig mediawiki.tar.gz \
     && tar -xz --strip-components=1 -f mediawiki.tar.gz \

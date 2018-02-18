@@ -1,0 +1,1 @@
+The Dockerfile contains a mysql installation. The Dockerfile is part of a series of dockerfiles that are all reviewed by me, so that I can trust them. Therefore it has detailed comments to be as transparent as possible.
