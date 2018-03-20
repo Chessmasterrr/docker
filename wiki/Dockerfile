@@ -30,4 +30,4 @@ RUN set -xe \
     && rm mediawiki.tar.gz \
     && rm mediawiki.tar.gz.sig \
     && rm keys.txt \
-    && chown -R www-data:www-data .
+    && chown -R www-data images
