@@ -24,7 +24,8 @@ RUN set -ex \
 	&& a2enmod headers \
 	&& sed -i 's/ServerSignature On/ServerSignature Off/g' /etc/apache2/conf-available/security.conf \
 	&& sed -i 's/#Header set X-Frame-Options: "sameorigin"/Header set X-Frame-Options: "sameorigin"/g' /etc/apache2/conf-available/security.conf \
-	&& sed -i 's/#Header set X-Content-Type-Options: "nosniff"/Header set X-Content-Type-Options: "nosniff"/g' /etc/apache2/conf-available/security.conf
+	&& sed -i 's/#Header set X-Content-Type-Options: "nosniff"/Header set X-Content-Type-Options: "nosniff"/g' /etc/apache2/conf-available/security.conf \
+	&& sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/apache2/apache2.conf
 
 # set port and start apache in foreground to prevent the container from exiting
 EXPOSE 80
