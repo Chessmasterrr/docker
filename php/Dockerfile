@@ -14,12 +14,17 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # logs should go to stdout / stderr and remove default index.html
+# enable system hardening for apache
 RUN set -ex \
 	&& . "/etc/apache2/envvars" \
 	&& ln -sfT /dev/stderr "$APACHE_LOG_DIR/error.log" \
 	&& ln -sfT /dev/stdout "$APACHE_LOG_DIR/access.log" \
 	&& ln -sfT /dev/stdout "$APACHE_LOG_DIR/other_vhosts_access.log" \
-	&& rm /var/www/html/index.html
+	&& rm /var/www/html/index.html \
+	&& a2enmod headers \
+	&& sed -i 's/ServerSignature On/ServerSignature Off/g' /etc/apache2/conf-available/security.conf \
+	&& sed -i 's/#Header set X-Frame-Options: "sameorigin"/Header set X-Frame-Options: "sameorigin"/g' /etc/apache2/conf-available/security.conf \
+	&& sed -i 's/#Header set X-Content-Type-Options: "nosniff"/Header set X-Content-Type-Options: "nosniff"/g' /etc/apache2/conf-available/security.conf
 
 # set port and start apache in foreground to prevent the container from exiting
 EXPOSE 80
