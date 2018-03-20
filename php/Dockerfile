@@ -25,7 +25,8 @@ RUN set -ex \
 	&& sed -i 's/ServerSignature On/ServerSignature Off/g' /etc/apache2/conf-available/security.conf \
 	&& sed -i 's/#Header set X-Frame-Options: "sameorigin"/Header set X-Frame-Options: "sameorigin"/g' /etc/apache2/conf-available/security.conf \
 	&& sed -i 's/#Header set X-Content-Type-Options: "nosniff"/Header set X-Content-Type-Options: "nosniff"/g' /etc/apache2/conf-available/security.conf \
-	&& sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/apache2/apache2.conf
+	&& sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/apache2/apache2.conf \
+	&& sed -i 's/allow_url_fopen = On/allow_url_fopen = Off/g' /etc/php/7.1/apache2/php.ini
 
 # set port and start apache in foreground to prevent the container from exiting
 EXPOSE 80
