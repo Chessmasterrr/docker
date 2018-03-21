@@ -2,6 +2,9 @@
 # exit when an error occurs in one line
 set -eo pipefail
 
+# set correct user rights for data directory
+chown -R mysql:mysql /var/lib/mysql
+
 # check if data directory is empty
 if [ ! -d "/var/lib/mysql/mysql" ]; then
 	# check param MYSQL_DATABASE
@@ -28,7 +31,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 		if echo 'SELECT 0' | mysql --protocol=socket -uroot -hlocalhost --socket="/var/run/mysqld/mysqld.sock" &> /dev/null; then
 			break
 		fi
-		echo 'Starting in progress...'
+		echo 'Starting in progress...'s
 		sleep 1
 	done
 	if [ "$i" = 0 ]; then
