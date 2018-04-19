@@ -2,11 +2,16 @@
 # exit when an error occurs in one line
 set -eo pipefail
 
-# set correct user rights for data directory
-chown -R mysql:mysql /var/lib/mysql
-
 # check if data directory is empty
 if [ ! -d "/var/lib/mysql/mysql" ]; then
+
+	# check if container is started with root user
+	if [[ $EUID -ne 0 ]]; then
+	   echo "This container must be started with --user root to initialize the data directory." 
+	   exit 1
+	fi
+	TODO
+
 	# check param MYSQL_DATABASE
 	if [ -z ${MYSQL_DATABASE} ]; then
 		echo "Parameter MYSQL_DATABASE not given, exiting!"
