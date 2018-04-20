@@ -18,3 +18,6 @@ RUN set -xe \
     && mkdir plugins/CustomReporter \
     && tar -xz --strip-components=1 -f customreporter.tar.gz -C plugins/CustomReporter/ \
     && rm customreporter.tar.gz
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
