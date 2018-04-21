@@ -3,8 +3,8 @@
 set -eo pipefail
 
 # set file permissions
-chown -R www-data:www-data /var/www/html/config
-chmod -R 440 /var/www/html/config
+chown -R www-data:www-data /var/www/
+chmod -R 550 /var/www/
 
 # start server
 echo "Start productive mantis server."
