@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start the first process
-/usr/local/bin/apache2-foreground &
+apachectl -D FOREGROUND &
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start apache2-foreground: $status"

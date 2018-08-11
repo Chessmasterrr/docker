@@ -1,62 +1,37 @@
-FROM php:7.1.6-apache
+FROM chessmasterrr/php:latest
 
 ### install preconditions ###
-# nextcloud needs the following additional php extensions: bz2 curl exif gd intl ldap mcrypt mysqli opcache pcntl pdo_mysql zip
-# (see https://docs.nextcloud.com/server/12/admin_manual/installation/source_installation.html)
-# bz2 extension needs libbz2-dev
-# curl extension needs libcurl4-openssl-dev
-# gd needs config settings for working with png and jpeg formats via docker-php-ext-configure
-# for this config settings the following packages are needed: libpng-dev libjpeg-dev
-# intl extension needs libicu-dev
-# ldap extension needs libldap2-dev
-# mcrypt extension needs libmcrypt-dev
-# bzip2 is needed to decrompress the installation archive later on
-# libmagickwand-dev is needed for imagick
-# cron is needed for the maintenance script
+# (see https://docs.nextcloud.com/server/13/admin_manual/installation/source_installation.html)
+# nextcloud needs the following additional php modules: apcu bz2 curl gmp intl ldap smbclient zip
+# other programs needed: cron ffmpeg LibreOffice
 RUN set -xe \
+    && export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
-    && apt-get install -y \
-        bzip2 \
+    && apt-get install -y -q \
+        php-apcu \
+        php-bz2 \
+        php-curl \
+        php-gmp \
+        php-imagick \
+        php-imap \
+        php-intl \
+        php-ldap \
+        php-smbclient \
+        php-zip \
+
         cron \
-        libbz2-dev \
-        libcurl4-openssl-dev \
-        libicu-dev \
-        libjpeg-dev \
-        libldap2-dev \
-        libmagickwand-dev \
-        libmcrypt-dev \
-        libpng-dev \
-    && pecl install \
-        imagick \
-        APCu-5.1.8 \
-    && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
-    && docker-php-ext-enable apcu \
-    && docker-php-ext-install \
-        bz2 \
-        curl \
-        exif \
-        gd \
-        intl \
-        ldap \
-        mcrypt \
-        mysqli \
-        opcache \
-        pcntl \
-        pdo_mysql \
-        zip \
-    && a2enmod rewrite \
+        ffmpeg \
+        libreoffice \
     && rm -rf /var/lib/apt/lists/*
 
 ### set values ###
 # see https://nextcloud.com/install/#instructions-server for version number
-ENV NEXTCLOUD_VERSION 12.0.0
+ENV NEXTCLOUD_VERSION 13.0.5
 ENV NEXTCLOUD_URL https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2
 
-
 ### configure system ###
-# configure opcache, see https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
-# configure imagick, cron and max upload size
+# configure opcache, see https://docs.nextcloud.com/server/13/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
+# configure cron
 RUN { \
         echo 'opcache.enable=1'; \
         echo 'opcache.enable_cli=1'; \
@@ -65,22 +40,21 @@ RUN { \
         echo 'opcache.memory_consumption=128'; \
         echo 'opcache.save_comments=1'; \
         echo 'opcache.revalidate_freq=1'; \
-    } > /usr/local/etc/php/conf.d/opcache-recommended.ini \
+    } > /etc/php/7.2/apache2/conf.d/opcache-recommended.ini \
     && a2enmod rewrite \
-    && echo 'extension=imagick.so' > /usr/local/etc/php/conf.d/imagick.ini \
     && sed -i '$ d' /etc/crontab \
     && echo '*/15 *  * * *  www-data php -f /var/www/html/cron.php' >> /etc/crontab \
     && echo '#' >> /etc/crontab \
     && cron
 
-
+WORKDIR /var/www/html
 ### install application ###
 # import gpg keys to verify the downloads, see https://nextcloud.com/nextcloud.asc
 # set upload size
 COPY keys.txt keys.txt
 RUN set -xe \
-    && curl -SL ${NEXTCLOUD_URL} -o nextcloud.tar.bz2 \
-    && curl -SL ${NEXTCLOUD_URL}.asc -o nextcloud.tar.bz2.asc \
+    && wget --no-check-certificate --no-verbose ${NEXTCLOUD_URL} -O nextcloud.tar.bz2 \
+    && wget --no-check-certificate --no-verbose ${NEXTCLOUD_URL}.asc -O nextcloud.tar.bz2.asc \
     && gpg --import keys.txt \
     && gpg --verify nextcloud.tar.bz2.asc nextcloud.tar.bz2 \
     && tar -xj --strip-components=1 -f nextcloud.tar.bz2 \
