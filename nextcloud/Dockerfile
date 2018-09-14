@@ -26,12 +26,13 @@ RUN set -xe \
 
 ### set values ###
 # see https://nextcloud.com/install/#instructions-server for version number
-ENV NEXTCLOUD_VERSION 13.0.5
+ENV NEXTCLOUD_VERSION 14.0.0
 ENV NEXTCLOUD_URL https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2
 
 ### configure system ###
-# configure opcache, see https://docs.nextcloud.com/server/13/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
+# configure opcache, see https://docs.nextcloud.com/server/14/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
 # configure cron
+# configure large file uploads, see https://docs.nextcloud.com/server/14/admin_manual/configuration_files/big_file_upload_configuration.html
 RUN { \
         echo 'opcache.enable=1'; \
         echo 'opcache.enable_cli=1'; \
@@ -45,7 +46,11 @@ RUN { \
     && sed -i '$ d' /etc/crontab \
     && echo '*/15 *  * * *  www-data php -f /var/www/html/cron.php' >> /etc/crontab \
     && echo '#' >> /etc/crontab \
-    && cron
+    && cron \
+    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2G/g' /etc/php/7.2/apache2/php.ini \
+    && sed -i 's/post_max_size = 8M/post_max_size = 2G/g' /etc/php/7.2/apache2/php.ini \
+    && sed -i 's/max_input_time = 60/max_input_time = 3600/g' /etc/php/7.2/apache2/php.ini \
+    && sed -i 's/max_execution_time = 30/max_execution_time = 3600/g' /etc/php/7.2/apache2/php.ini
 
 WORKDIR /var/www/html
 ### install application ###
