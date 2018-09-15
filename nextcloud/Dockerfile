@@ -18,7 +18,6 @@ RUN set -xe \
         php-ldap \
         php-smbclient \
         php-zip \
-
         cron \
         ffmpeg \
         libreoffice \
