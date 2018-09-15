@@ -50,7 +50,8 @@ RUN { \
     && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2G/g' /etc/php/7.2/apache2/php.ini \
     && sed -i 's/post_max_size = 8M/post_max_size = 2G/g' /etc/php/7.2/apache2/php.ini \
     && sed -i 's/max_input_time = 60/max_input_time = 3600/g' /etc/php/7.2/apache2/php.ini \
-    && sed -i 's/max_execution_time = 30/max_execution_time = 3600/g' /etc/php/7.2/apache2/php.ini
+    && sed -i 's/max_execution_time = 30/max_execution_time = 3600/g' /etc/php/7.2/apache2/php.ini \
+    && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php/7.2/apache2/php.ini
 
 WORKDIR /var/www/html
 ### install application ###
