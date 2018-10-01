@@ -16,7 +16,7 @@ RUN apt-get update \
 
 ### set values ###
 # see https://www.mediawiki.org/wiki/MediaWiki for version number
-ENV MEDIAWIKI_VERSION 1.31.0
+ENV MEDIAWIKI_VERSION 1.31.1
 # see https://www.mediawiki.org/wiki/Download
 ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.31/mediawiki-${MEDIAWIKI_VERSION}.tar.gz
 
