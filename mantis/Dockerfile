@@ -2,10 +2,10 @@ FROM chessmasterrr/php:latest
 
 ### set values ###
 # see https://www.mantisbt.org/download.php for version number
-ENV MANTIS_VERSION 2.17.1
+ENV MANTIS_VERSION 2.19.0
 # see https://sourceforge.net/projects/mantisbt/files/mantis-stable/{VERSION}/ (click on the i beside the file)
 ENV MANTIS_URL https://sourceforge.net/projects/mantisbt/files/mantis-stable/${MANTIS_VERSION}/mantisbt-${MANTIS_VERSION}.tar.gz/download
-ENV MANTIS_SHA1 b4dcbf2f0834d821ebd70f3280eb5d95302b9ea9
+ENV MANTIS_SHA1 6411e60126951c62f1d92dd7cb1dcc476ff20008
 
 WORKDIR /var/www/html
 ### install application (with Custom Reporter plugin) ###
