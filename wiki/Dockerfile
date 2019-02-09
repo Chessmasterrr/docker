@@ -18,7 +18,7 @@ RUN apt-get update \
 # see https://www.mediawiki.org/wiki/MediaWiki for version number
 ENV MEDIAWIKI_VERSION 1.32.0
 # see https://www.mediawiki.org/wiki/Download
-ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.31/mediawiki-${MEDIAWIKI_VERSION}.tar.gz
+ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.32/mediawiki-${MEDIAWIKI_VERSION}.tar.gz
 
 ### install application ###
 # import gpg keys to verify the downloads, see https://www.mediawiki.org/keys/keys.txt

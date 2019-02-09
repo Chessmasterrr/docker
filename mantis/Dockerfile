@@ -5,7 +5,7 @@ FROM chessmasterrr/php:latest
 ENV MANTIS_VERSION 2.19.0
 # see https://sourceforge.net/projects/mantisbt/files/mantis-stable/{VERSION}/ (click on the i beside the file)
 ENV MANTIS_URL https://sourceforge.net/projects/mantisbt/files/mantis-stable/${MANTIS_VERSION}/mantisbt-${MANTIS_VERSION}.tar.gz/download
-ENV MANTIS_SHA1 4b1c02a8a94f55941a47df793a20607e1375e2fb
+ENV MANTIS_SHA1 6411e60126951c62f1d92dd7cb1dcc476ff20008
 
 WORKDIR /var/www/html
 ### install application (with Custom Reporter plugin) ###
