@@ -25,7 +25,7 @@ RUN set -xe \
 
 ### set values ###
 # see https://nextcloud.com/install/#instructions-server for version number
-ENV NEXTCLOUD_VERSION 14.0.1
+ENV NEXTCLOUD_VERSION 15.0.4
 ENV NEXTCLOUD_URL https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2
 
 ### configure system ###
