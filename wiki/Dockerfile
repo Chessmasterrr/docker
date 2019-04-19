@@ -15,7 +15,7 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 ### set values ###
-# see https://www.mediawiki.org/wiki/MediaWiki for version number
+# see https://www.mediawiki.org/wiki/Download for version number
 ENV MEDIAWIKI_VERSION 1.32.0
 # see https://www.mediawiki.org/wiki/Download
 ENV MEDIAWIKI_URL https://releases.wikimedia.org/mediawiki/1.32/mediawiki-${MEDIAWIKI_VERSION}.tar.gz

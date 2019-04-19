@@ -1,11 +1,11 @@
 FROM scratch
 
-# download https://partner-images.canonical.com/core/cosmic/current/ubuntu-cosmic-core-cloudimg-amd64-root.tar.gz,
-# verify the integrity (echo "{SHA256} ubuntu-cosmic-core-cloudimg-amd64-root.tar.gz" | sha256sum -c)
+# download https://partner-images.canonical.com/core/disco/current/ubuntu-disco-core-cloudimg-amd64-root.tar.gz,
+# verify the integrity (echo "{SHA256} ubuntu-disco-core-cloudimg-amd64-root.tar.gz" | sha256sum -c)
 # and put it in this directory
 
 # install base system
-ADD ubuntu-cosmic-core-cloudimg-amd64-root.tar.gz /
+ADD ubuntu-disco-core-cloudimg-amd64-root.tar.gz /
 
 # a few minor docker-specific tweaks
 # see https://github.com/docker/docker/blob/9a9fc01af8fb5d98b8eec0740716226fadb3735c/contrib/mkimage/debootstrap
