@@ -18,7 +18,17 @@ RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-s
 # comment out a few problematic configuration values
 	&& find /etc/mysql/ -name '*.cnf' -print0 \
 		| xargs -0 grep -lZE '^(bind-address|log)' \
-        | xargs -rt -0 sed -Ei 's/^(bind-address|log)/#&/'
+        | xargs -rt -0 sed -Ei 's/^(bind-address|log)/#&/' \
+# change character set to utf8
+	&& echo "[client]" >> /etc/mysql/conf.d/char.cnf \
+	&& echo "default-character-set = utf8mb4" >> /etc/mysql/conf.d/char.cnf \
+	&& echo "[mysql]" >> /etc/mysql/conf.d/char.cnf \
+	&& echo "default-character-set = utf8mb4" >> /etc/mysql/conf.d/char.cnf \
+	&& echo "[mysqld]" >> /etc/mysql/conf.d/char.cnf \
+	&& echo "character_set_server = utf8mb4" >> /etc/mysql/conf.d/char.cnf \
+	&& echo "collation_server = utf8mb4_unicode_ci" >> /etc/mysql/conf.d/char.cnf
+
+
 
 # copy file to change the root password and create a database
 COPY docker-entrypoint.sh /usr/local/bin/
