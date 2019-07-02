@@ -10,6 +10,7 @@ ENV MANTIS_SHA1 7533e8eb2f3b077b1bd95e4460ebb58a98b38068
 WORKDIR /var/www/html
 ### install application (with Custom Reporter plugin) ###
 RUN set -xe \
+    && docker-php-ext-install mysqli \
     && curl -L ${MANTIS_URL} -o mantis.tar.gz \
     && echo "${MANTIS_SHA1}  mantis.tar.gz" | sha1sum -c \
     && tar -xz --strip-components=1 -f mantis.tar.gz \
