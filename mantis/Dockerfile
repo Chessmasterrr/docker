@@ -1,4 +1,4 @@
-FROM php:latest
+FROM php:apache
 
 ### set values ###
 # see https://www.mantisbt.org/download.php for version number
