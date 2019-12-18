@@ -25,8 +25,9 @@ RUN git clone $BITPOLL_URL \
 
 USER www-data
 WORKDIR /Bitpoll
+COPY uwsgi-bitpoll.ini /Bitpoll/uwsgi-bitpoll.ini
 EXPOSE 8000
 
 CMD ./manage.py compilemessages \
   && ./manage.py collectstatic --noinput \
-  && ./manage.py runserver 0.0.0.0:8000
+  && uwsgi uwsgi-bitpoll.ini
