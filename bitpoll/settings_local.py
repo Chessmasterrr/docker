@@ -5,6 +5,9 @@
 # see <https://docs.djangoproject.com/en/dev/howto/deployment/checklist/#secret-key>
 SECRET_KEY = '123456789'
 
+# generate with ./manage.py generate_encryption_key
+FIELD_ENCRYPTION_KEY = "generateyourown"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
