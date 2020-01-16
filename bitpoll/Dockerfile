@@ -2,7 +2,7 @@ FROM python
 
 ### set values ###
 ENV BITPOLL_URL https://github.com/fsinfuhh/Bitpoll
-ENV BITPOLL_RELEASE 0.9
+ENV BITPOLL_RELEASE 0.9.1
 
 ### Prepareration ###
 RUN git clone $BITPOLL_URL --branch $BITPOLL_RELEASE \
