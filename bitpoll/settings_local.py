@@ -8,6 +8,9 @@ SECRET_KEY = '123456789'
 # generate with ./manage.py generate_encryption_key
 FIELD_ENCRYPTION_KEY = "generateyourown"
 
+# disable group management when using sqlite
+GROUP_MANAGEMENT = False
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
