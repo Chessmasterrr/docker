@@ -2,9 +2,10 @@ FROM python
 
 ### set values ###
 ENV BITPOLL_URL https://github.com/fsinfuhh/Bitpoll
+ENV BITPOLL_RELEASE 0.9.2
 
 ### Prepareration ###
-RUN git clone $BITPOLL_URL \
+RUN git clone $BITPOLL_URL --branch $BITPOLL_RELEASE \
   && cd Bitpoll \
   && apt-get update \
 	&& apt-get install -y --no-install-recommends \
