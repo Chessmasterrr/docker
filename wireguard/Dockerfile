@@ -1,4 +1,4 @@
-FROM chessmasterrr/ubuntu:latest
+FROM ubuntu:latest
 
 # install dependencies:
 #    software-properties-common for add-apt-repository command
