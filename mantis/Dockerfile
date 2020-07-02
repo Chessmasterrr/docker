@@ -2,10 +2,10 @@ FROM php:apache
 
 ### set values ###
 # see https://www.mantisbt.org/download.php for version number
-ENV MANTIS_VERSION 2.24.0
+ENV MANTIS_VERSION 2.24.1
 # see https://sourceforge.net/projects/mantisbt/files/mantis-stable/{VERSION}/ (click on the i beside the file)
 ENV MANTIS_URL https://sourceforge.net/projects/mantisbt/files/mantis-stable/${MANTIS_VERSION}/mantisbt-${MANTIS_VERSION}.tar.gz/download
-ENV MANTIS_SHA1 b1836f4c0b8ae686d996541ee8741fd61ad6fafe
+ENV MANTIS_SHA1 f4ecf2ef8316e530bcfe501a0068110f28361b8d
 
 WORKDIR /var/www/html
 ### install application (with Custom Reporter plugin) ###
