@@ -1,10 +1,9 @@
 FROM ubuntu:latest
 
 # install dependencies:
-#    software-properties-common for add-apt-repository command
 #    iproute2 for ip command (used from wireguard in wg-quick)
 RUN apt-get update && apt-get install -y \
-		software-properties-common iproute2 wireguard \
+		iproute2 wireguard \
 	&& rm -rf /var/lib/apt/lists/*
 
 # start wireguard
